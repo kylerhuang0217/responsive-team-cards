@@ -5,7 +5,7 @@
 }
 
 img {
-  width: 250px;
+  width: 225px;
   border-radius: 15px;
 }
 
@@ -16,8 +16,10 @@ img {
   display: flex;
   justify-content: center;
   gap: 25px;
+  flex-wrap: wrap;
 }
 .team .team-flex .team-item {
+  max-width: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,6 +44,9 @@ img {
   .team .team-flex {
     display: flex;
     flex-direction: column;
+  }
+  .team .team-flex .team-item {
+    max-width: 400px;
   }
   .team .team-flex .team-item img {
     width: 300px;
