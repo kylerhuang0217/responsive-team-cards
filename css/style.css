@@ -5,7 +5,7 @@
 }
 
 img {
-  width: 225px;
+  width: 325px;
   border-radius: 15px;
 }
 
@@ -15,15 +15,15 @@ img {
 .team .team-flex {
   display: flex;
   justify-content: center;
-  gap: 25px;
+  gap: 55px;
   flex-wrap: wrap;
 }
 .team .team-flex .team-item {
-  max-width: 250px;
   background-color: #f9f9f9;
-  padding: 10px;
+  padding: 10px 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  border-radius: 15px;
 }
 .team .team-flex .team-item:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
@@ -32,7 +32,43 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
+  gap: 5px;
+}
+.team .team-flex .team-item .team-content .hidden {
+  display: none;
+}
+.team .team-flex .team-item .action-buttons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+.team .team-flex .team-item .action-buttons button {
+  background-color: #f9f9f9;
+  border: solid 2px #e3e5e7;
+  border-radius: 5px;
+  padding: 5px 15px 5px 15px;
+  font-size: 15px;
+  transition: background-color 0.2s ease;
+}
+.team .team-flex .team-item .action-buttons button:hover {
+  background-color: #e7e7e7;
+}
+.team .button-wrapper {
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+}
+.team .button-wrapper .add-card-btn {
+  background-color: #007BFF;
+  color: #f9f9f9;
+  border-radius: 6px;
+  padding: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.team .button-wrapper .add-card-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 @media (max-width: 768px) {
