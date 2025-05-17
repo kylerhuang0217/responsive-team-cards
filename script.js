@@ -32,6 +32,81 @@ hidebtns.forEach(hidebtn =>{
     email.classList.add("hidden");
   })
 })
+
+// edit button
+const editbtns = document.querySelectorAll(".edit");
+//定義一個通用函式：將文字元素轉換為輸入欄位
+// const nameInput = document.createElement("input");
+// nameInput.value =  name.textContent;
+// nameInput.className = "name-input";
+// const nameparent = name.parentNode;
+// nameparent.replaceChild(nameInput,name);
+function replaceWithInput(originalEl, type, newClass) {
+  let inputElement;
+  
+  // 決定要建立 input 還是 textarea
+  if (type === "textarea") {
+    inputElement = document.createElement("textarea");
+  } else {
+    inputElement = document.createElement("input");
+  }
+
+  // 將原本的文字內容放進輸入欄
+  inputElement.value = originalEl.textContent;
+
+  // 加上指定的 class 名稱
+  inputElement.className = newClass;
+
+  // 把舊元素替換成新輸入欄
+  const parent = originalEl.parentNode;
+  parent.replaceChild(inputElement, originalEl);
+}
+
+//  const nameInput = card.querySelector(".name-input");
+//   const nameP = document.createElement("p");
+//   nameP.textContent = nameInput.value
+//   nameP.className = "name";
+//   const nameparent = nameInput.parentNode;
+//   nameparent.replaceChild(nameP,nameInput);
+function  replaceWithText(inputEl, newClass){
+  let inputText;
+  inputText = document.createElement("p");
+  inputText.textContent = inputEl.value;
+  inputText.className = newClass;
+  const parent = inputEl.parentNode;
+  parent.replaceChild(inputText,inputEl)
+}
+editbtns.forEach(editbtn =>{
+  editbtn.addEventListener("click", () =>{
+    const card = editbtn.closest(".team-item");
+    const name = card.querySelector(".name");
+    const title = card.querySelector(".title");
+    const bio = card.querySelector(".bio");
+    const email = card.querySelector(".email");
+
+    //edit 跟 save 的按鈕文字轉換
+    if(editbtn.textContent === "Edit"){
+
+      replaceWithInput(name, "input", "name-input");
+      replaceWithInput(title, "input", "title-input");
+      replaceWithInput(bio, "textarea", "bio-input");
+      replaceWithInput(email, "input", "email-input");
+
+      editbtn.textContent = "Save";
+    }else{
+      const nameInput = card.querySelector(".name-input");
+      const titleInput = card.querySelector(".title-input");
+      const bioInput = card.querySelector(".bio-input");
+      const emailInput = card.querySelector(".email-input");
+      replaceWithText(nameInput,"name");
+      replaceWithText(titleInput,"title");
+      replaceWithText(bioInput,"bio");
+      replaceWithText(emailInput,"email");
+      editbtn.textContent = "Edit";
+    }
+  })
+
+})
 //createcard
 const teamMembers = [
   {
@@ -69,8 +144,10 @@ function createCard(){
     teamContent.className = "team-content";
     const nameElement = document.createElement("h4");
     nameElement.textContent =  teamMembers[memberIndex].name;
+    nameElement.className = "name";
     const titleElement = document.createElement("p");
     titleElement.textContent = teamMembers[memberIndex].title;
+    titleElement.className = "title";
     const description =  document.createElement("p");
     description.className = "hidden bio";
     description.textContent = teamMembers[memberIndex].description;
@@ -112,6 +189,34 @@ function createCard(){
       const email = card.querySelector(".email");
       bio.classList.add("hidden");
       email.classList.add("hidden");
-  })
+  });
+    editButton.addEventListener("click", () =>{
+      const card = editButton.closest(".team-item");
+      const name = card.querySelector(".name");
+      const title = card.querySelector(".title");
+      const bio = card.querySelector(".bio");
+      const email = card.querySelector(".email");
+
+      //edit 跟 save 的按鈕文字轉換
+      if(editButton.textContent === "Edit"){
+
+        replaceWithInput(name, "input", "name-input");
+        replaceWithInput(title, "input", "title-input");
+        replaceWithInput(bio, "textarea", "bio-input");
+        replaceWithInput(email, "input", "email-input");
+
+        editButton.textContent = "Save";
+      }else{
+        const nameInput = card.querySelector(".name-input");
+        const titleInput = card.querySelector(".title-input");
+        const bioInput = card.querySelector(".bio-input");
+        const emailInput = card.querySelector(".email-input");
+        replaceWithText(nameInput,"name");
+        replaceWithText(titleInput,"title");
+        replaceWithText(bioInput,"bio");
+        replaceWithText(emailInput,"email");
+        editbtn.textContent = "Edit";
+      }
+    })
 }
 button.addEventListener('click',createCard);
