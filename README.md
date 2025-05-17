@@ -31,13 +31,3 @@
 ## 頁面預覽
 
 - https://responsive-team-cards.surge.sh
-
-## 頁面截圖
-
-### 💻 桌面版
-
-![桌面版畫面](./images/screenshot-desktop.png)
-
-### 📱 手機版
-
-![手機版畫面](./images/screenshot-mobile.png)
