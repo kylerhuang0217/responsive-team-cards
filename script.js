@@ -215,7 +215,7 @@ function createCard(){
         replaceWithText(titleInput,"title");
         replaceWithText(bioInput,"bio");
         replaceWithText(emailInput,"email");
-        editbtn.textContent = "Edit";
+        editButton.textContent = "Edit";
       }
     })
 }
