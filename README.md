@@ -20,14 +20,28 @@
 
 整體是用 JavaScript 操作 DOM 的方式來實作，不靠後端或框架，純前端完成。
 
+## API 串接功能（Week 6 延伸）
+
+在第六週的任務中，將原本寫死的成員資料改為從後端 API 動態取得。後端是用 FastAPI 製作的簡易 JSON API：
+
+- 頁面載入時會自動 fetch API，載入前 3 位成員並顯示
+- 剩下的成員資料則透過點擊 **"Add Team Member"** 按鈕逐一加入
+- 所有卡片仍支援展開、收起與編輯功能
+- 前端與後端部署於不同平台，使用 JavaScript 的 `fetch()` 對 API 發送 GET 請求
+
+**API URL**: [https://responsive-team-api.onrender.com/api/members](https://responsive-team-api.onrender.com/api/members)
+
+這部分練習了非同步資料處理與 DOM 操作的結合，也讓整個專案更接近真實開發情境。
+
 ## 使用技術
 
 - HTML
 - SCSS
 - Flexbox
 - RWD（Responsive Web Design）
-- JavaScript（互動邏輯）
+- JavaScript（互動邏輯、API 串接）
+- FastAPI（後端資料來源）
 
 ## 頁面預覽
 
-- https://responsive-team-cards.surge.sh
+- [https://responsive-team-cards.surge.sh](https://responsive-team-cards.surge.sh)
