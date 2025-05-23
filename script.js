@@ -2,39 +2,54 @@ const team = document.querySelector(".team");
 const teamFlex = document.querySelector(".team-flex");
 
 //add new team member button
-const button = document.createElement('button');
-button.textContent = "Add Team Member";
-button.className = "add-card-btn";
-const buttonWrapper = document.createElement('div');
-buttonWrapper.className = "button-wrapper"
-buttonWrapper.appendChild(button)
-team.appendChild(buttonWrapper);
+const addMemberButton = document.createElement('button');
+addMemberButton.textContent = "Add Team Member";
+addMemberButton.className = "add-card-btn";
+const addMemberButtonWrapper = document.createElement('div');
+addMemberButtonWrapper.className = "button-wrapper";
+addMemberButtonWrapper.appendChild(addMemberButton);
+team.appendChild(addMemberButtonWrapper);
 
-// show/hide details button
-const showdetailbtns = document.querySelectorAll(".show");
-const hidebtns = document.querySelectorAll(".hide");
-showdetailbtns.forEach(showdetailbtn =>{
-  showdetailbtn.addEventListener("click",() =>{
-    const card = showdetailbtn.closest(".team-item");
-    const bio = card.querySelector(".bio");
-    const email = card.querySelector(".email");
-    bio.classList.remove("hidden");
-    email.classList.remove("hidden");
-  })
+
+// fetch team-api
+fetch(" https://responsive-team-api.onrender.com/api/members")
+.then(response => response.json())
+.then(data => {
+  console.log(data)
+  const initialMembers = data.slice(0,3);
+  initialMembers.forEach(function(initialMember){
+    createCard(initialMember);
+  });
+  let remainingMembers = data.slice(3); 
+
+  addMemberButton.addEventListener('click', function () {
+  // 從 remainingMembers 拿出第一筆資料
+  const nextMember = remainingMembers.shift();
+
+  // 如果有資料就建立卡片
+  if (nextMember) {
+    createCard(nextMember);
+  }
+
+  // 如果已經沒有剩下的人，就把按鈕關掉
+  if (remainingMembers.length === 0) {
+    addMemberButton.disabled = true;
+  }
+});
 })
-
-hidebtns.forEach(hidebtn =>{
-  hidebtn.addEventListener("click",() =>{
-    const card = hidebtn.closest(".team-item");
-    const bio = card.querySelector(".bio");
-    const email = card.querySelector(".email");
-    bio.classList.add("hidden");
-    email.classList.add("hidden");
-  })
-})
-
+.catch(error =>{
+  console.error("出錯了", error);
+});
+//createcard
+function createElement(tag,className,textContent){
+  const element = document.createElement(tag);
+  element.className = className;
+  if(textContent){
+    element.textContent = textContent;
+  }
+  return element;
+}
 // edit button
-const editbtns = document.querySelectorAll(".edit");
 //定義一個通用函式：將文字元素轉換為輸入欄位
 // const nameInput = document.createElement("input");
 // nameInput.value =  name.textContent;
@@ -76,95 +91,21 @@ function  replaceWithText(inputEl, newClass){
   const parent = inputEl.parentNode;
   parent.replaceChild(inputText,inputEl)
 }
-editbtns.forEach(editbtn =>{
-  editbtn.addEventListener("click", () =>{
-    const card = editbtn.closest(".team-item");
-    const name = card.querySelector(".name");
-    const title = card.querySelector(".title");
-    const bio = card.querySelector(".bio");
-    const email = card.querySelector(".email");
-
-    //edit 跟 save 的按鈕文字轉換
-    if(editbtn.textContent === "Edit"){
-
-      replaceWithInput(name, "input", "name-input");
-      replaceWithInput(title, "input", "title-input");
-      replaceWithInput(bio, "textarea", "bio-input");
-      replaceWithInput(email, "input", "email-input");
-
-      editbtn.textContent = "Save";
-    }else{
-      const nameInput = card.querySelector(".name-input");
-      const titleInput = card.querySelector(".title-input");
-      const bioInput = card.querySelector(".bio-input");
-      const emailInput = card.querySelector(".email-input");
-      replaceWithText(nameInput,"name");
-      replaceWithText(titleInput,"title");
-      replaceWithText(bioInput,"bio");
-      replaceWithText(emailInput,"email");
-      editbtn.textContent = "Edit";
-    }
-  })
-
-})
-//createcard
-const teamMembers = [
-  {
-    name: "Sophia Lin",
-    title: "UX Strategist",
-    description: "Designing experiences that actually solve user pain.",
-    image: "/images/team4.jpg",
-    email: "sophialin@gmail.com"
-  },
-  {
-    name: "Noah Wu",
-    title: "Cloud Architect",
-    description: "Building scalable systems from the ground up.",
-    image: "/images/team5.jpg",
-    email: "noahwu@gmail.com"
-  },
-  {
-    name: "Leo Chen",
-    title: "AI Researcher",
-    description: "Passionate about machine learning.",
-    image: "/images/team6.jpg",
-    email: "leochen@gmail.com"
-  },
-];
-
-let memberIndex = 0;
-function createCard(){
-    const teamItem = document.createElement('div');
-    teamItem.className = "team-item";
+function createCard(member){
+    const teamItem = createElement("div","team-item");
     const img = document.createElement('img');
-    img.src = teamMembers[memberIndex].image;
+    img.src = member.image;
     img.alt = "Team Member"
     teamItem.appendChild(img)
-    const teamContent = document.createElement("div")
-    teamContent.className = "team-content";
-    const nameElement = document.createElement("h4");
-    nameElement.textContent =  teamMembers[memberIndex].name;
-    nameElement.className = "name";
-    const titleElement = document.createElement("p");
-    titleElement.textContent = teamMembers[memberIndex].title;
-    titleElement.className = "title";
-    const description =  document.createElement("p");
-    description.className = "hidden bio";
-    description.textContent = teamMembers[memberIndex].description;
-    const emailElement = document.createElement("p");
-    emailElement.className = "hidden email";
-    emailElement.textContent = teamMembers[memberIndex].email;
-    const actionButtons = document.createElement("div");
-    actionButtons.className = "action-buttons";
-    const hideButton = document.createElement("button");
-    hideButton.textContent = "Hide";
-    hideButton.className = "hide";
-    const showButton = document.createElement("button");
-    showButton.textContent = "Show details";
-    showButton.className = "show";
-    const editButton = document.createElement("button");
-    editButton.textContent = "Edit";
-    editButton.className = "edit";
+    const teamContent = createElement("div","team-content");
+    const nameElement = createElement("h4","name",member.name);
+    const titleElement = createElement("p","title",member.title);
+    const description = createElement("p","hidden bio",member.description);
+    const emailElement = createElement("p","hidden email",member.email);
+    const actionButtons = createElement("div","action-buttons");
+    const hideButton = createElement("button","hide","Hide");
+    const showButton = createElement("button","show","Show details");
+    const editButton = createElement("button","edit","Edit");
     actionButtons.appendChild(hideButton);
     actionButtons.appendChild(showButton);
     actionButtons.appendChild(editButton);
@@ -175,7 +116,8 @@ function createCard(){
     teamItem.appendChild(teamContent);
     teamItem.appendChild(actionButtons);
     teamFlex.appendChild(teamItem);
-    memberIndex ++;
+
+    // show/hide details button
     showButton.addEventListener("click", () => {
       const card = showButton.closest(".team-item");
       const bio = card.querySelector(".bio");
@@ -219,4 +161,3 @@ function createCard(){
       }
     })
 }
-button.addEventListener('click',createCard);
